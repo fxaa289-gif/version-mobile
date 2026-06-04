@@ -49,7 +49,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mon
 .sidebar-user-status::before{content:'';width:6px;height:6px;border-radius:50%;background:#00d4b4;display:inline-block;flex-shrink:0}
 .sidebar-logout{width:100%;padding:10px;border-radius:9px;border:1px solid rgba(255,71,87,0.3);background:rgba(255,71,87,0.08);color:#ff4757;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:0.3px}
 .sidebar-logout:hover{background:rgba(255,71,87,0.18);border-color:rgba(255,71,87,0.5)}
-.main-content{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.main-content{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .container{max-width:100%;margin:0;padding:28px 24px;overflow-y:auto;flex:1}
 .header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;flex-wrap:wrap}
 .h-title{font-family:Syne,system-ui;font-weight:800;font-size:26px;background:linear-gradient(135deg,#00f2ff,#0088ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -411,7 +411,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mon
   .hamburger{display:flex}
   .sidebar-overlay{display:block}
 
-  /* Sidebar slides in over content */
+  /* Sidebar slides in OVER content — no layout change */
   .sidebar{
     position:fixed;top:0;left:0;height:100vh;z-index:999;
     width:260px;transform:translateX(-100%);
@@ -422,10 +422,15 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mon
   .sidebar.mobile-open{transform:translateX(0)}
   .sidebar-toggle{display:none}
 
-  /* Main takes full width */
-  .app-wrapper{flex-direction:column}
-  .main-content{width:100%;padding-top:0}
-  .container{padding:66px 14px 24px}
+  /* Main content — stays normal, sidebar floats over it */
+  .app-wrapper{display:block;height:100vh;overflow:hidden}
+  .main-content{width:100%;height:100vh;overflow:hidden;display:flex;flex-direction:column;position:relative;z-index:1}
+  .container{padding:66px 14px 24px;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch}
+
+  /* All interactive elements get proper touch support */
+  .btn,.btn-sm,.chapter-item,.sidebar-item,.report-card-actions button,
+  .resource-card-actions button,.feedback-card button,.cmodal-btn,
+  a,.chapter-add-btn,.hamburger{touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,242,255,0.1)}
 
   /* Header */
   .h-title{font-size:22px}
@@ -456,10 +461,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mon
   /* Feedback */
   .feedback-grid{grid-template-columns:1fr;gap:12px}
 
-  /* Tables */
+  /* Tables scroll horizontally */
   .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-  /* Modals */
+  /* Modals full screen */
   .modal-overlay{padding:12px}
   .modal-box.modal-lg,.modal-box.modal-md{max-width:100%}
   .modal-header{padding:14px 16px}
@@ -472,7 +477,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mon
   .metric-value{font-size:22px}
 
   /* Chapter sidebar horizontal scroll */
-  .chapters-list{display:flex;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  #chapters-list{display:flex;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
   .chapter-item{white-space:nowrap;flex-shrink:0}
 
   /* Login */
